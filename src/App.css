@@ -1,0 +1,9 @@
+body {
+  min-block-size: 100dvh;
+}
+
+#root {
+  position: absolute;
+  inset: 0;
+  background-color: #000;
+}
