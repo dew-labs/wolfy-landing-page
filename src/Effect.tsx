@@ -23,7 +23,7 @@ const CAMERA_SETTINGS = { position: [5, 0, 15], fov: 30 } as const;
 const PORSCHE_POSITION = [0.25, -1.5, 0] as const;
 const PORSCHE_ROTATION = [0.2, Math.PI / 10, 0.125] as const;
 const SHADOW_POSITION = [0, -1.16, 0] as const;
-const LIGHT_POSITION = [0, 0, 0] as const;
+const LIGHT_POSITION = [0, 0, 0] as [number, number, number];
 
 export default function Effect() {
   const [degraded, degrade] = useState(false);
@@ -83,7 +83,7 @@ function WolfyLogo({ scale, position, rotation }: WolfyLogoProps) {
       "May Mist": materials["May Mist"],
       Windsurf: materials.Windsurf,
       Bumblebee: materials.Bumblebee,
-    }).forEach(([_, material]) => {
+    }).forEach(([, material]) => {
       if (material) {
         applyProps(material, materialProps);
       }
@@ -118,25 +118,25 @@ function CameraRig() {
   });
 }
 
-const CEILING_POSITION = [0, 5, -9];
-const CEILING_SCALE = [10, 10, 1];
-const GROUP_ROTATION = [0, 0.5, 0] as const;
+const CEILING_POSITION = [0, 5, -9] as [number, number, number];
+const CEILING_SCALE = [10, 10, 1] as [number, number, number];
+const GROUP_ROTATION = [0, 0.5, 0] as [number, number, number];
 
-const SIDE_LIGHTFORMER_1_POSITION = [-5, 1, -1] as const;
-const SIDE_LIGHTFORMER_1_SCALE = [20, 0.1, 1] as const;
-const SIDE_LIGHTFORMER_2_POSITION = [-1, -1, -1] as const;
-const SIDE_LIGHTFORMER_2_SCALE = [20, 0.5, 1] as const;
-const SIDE_LIGHTFORMER_3_POSITION = [5, 2, 0] as const;
-const SIDE_LIGHTFORMER_3_SCALE = [20, 1, 1] as const;
+const SIDE_LIGHTFORMER_1_POSITION = [-5, 1, -1] as [number, number, number];
+const SIDE_LIGHTFORMER_1_SCALE = [20, 0.1, 1] as [number, number, number];
+const SIDE_LIGHTFORMER_2_POSITION = [-1, -1, -1] as [number, number, number];
+const SIDE_LIGHTFORMER_2_SCALE = [20, 0.5, 1] as [number, number, number];
+const SIDE_LIGHTFORMER_3_POSITION = [5, 2, 0] as [number, number, number];
+const SIDE_LIGHTFORMER_3_SCALE = [20, 1, 1] as [number, number, number];
 
-const ACCENT_LIGHTFORMER_POSITION = [-15, 4, -18] as const;
-const ACCENT_LIGHTFORMER_TARGET = [1, 1, 1] as const;
+const ACCENT_LIGHTFORMER_POSITION = [-15, 4, -18] as [number, number, number];
+const ACCENT_LIGHTFORMER_TARGET = [1, 1, 1] as [number, number, number];
 
 function Lightformers() {
   const positions = [2, 0, 2, 0, 2, 0, 2, 0];
   const groupRef = useRef<THREE.Group>(null);
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (groupRef.current) {
       groupRef.current.position.z += delta * 10;
       if (groupRef.current.position.z > 20) {
@@ -156,9 +156,13 @@ function Lightformers() {
       <group rotation={GROUP_ROTATION}>
         <group ref={groupRef}>
           {positions.map((x, i) => {
-            const circlePosition = [x, 4, i * 4] as const;
-            const circleScale = [3, 1, 1] as const;
-            const circleRotation = [Math.PI / 2, 0.5, 0.5] as const;
+            const circlePosition = [x, 4, i * 4] as [number, number, number];
+            const circleScale = [3, 1, 1] as [number, number, number];
+            const circleRotation = [Math.PI / 2, 0.5, 0.5] as [
+              number,
+              number,
+              number
+            ];
 
             return (
               <Lightformer
